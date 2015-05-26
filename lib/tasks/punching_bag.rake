@@ -3,7 +3,7 @@ namespace :punching_bag do
   task :combine, [:by_day_after, :by_month_after, :by_year_after] => [:environment] do |t, args|
     args.with_defaults :by_day_after => 7, :by_month_after => 1, :by_year_after => 1
 
-    punchable_types = Punch.uniq.pluck(:punchable_type)
+    punchable_types = Punch.unscoped.uniq.pluck(:punchable_type)
 
     punchable_types.each do |punchable_type|
       punchable_ids = Punch.uniq.where(punchable_type: punchable_type).pluck(:punchable_id)
